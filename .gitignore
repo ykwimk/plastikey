@@ -1,0 +1,9 @@
+# Personal sounds stay on this Mac: their rights do not allow publishing them.
+sounds-private/
+build/
+.captures/
+*.app
+.DS_Store
+# Signing identities must never reach the repository.
+*.p12
+*.pem
