@@ -78,6 +78,8 @@ static CGEventRef onInputEvent(CGEventTapProxy proxy, CGEventType type, CGEventR
         KSPlayMouseUp((CGMouseButton)CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber));
         return event;
     }
+    // A key re-posted by another app is not a real press (Siri re-sends ⌘+Space's Space when it is let go).
+    if (CGEventGetIntegerValueField(event, kCGEventSourceStateID) != kCGEventSourceStateHIDSystemState) return event;
     uint16_t key = (uint16_t)CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
     bool autorepeat = CGEventGetIntegerValueField(event, kCGKeyboardEventAutorepeat) != 0;
     if (KSIsPress(type, autorepeat, key, CGEventGetFlags(event))) KSPlayKey(key);
